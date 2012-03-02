@@ -6,6 +6,7 @@ gem 'jquery-rails'
 group :development do
   gem 'rspec-rails', '2.6.1'
   gem 'sqlite3', '1.3.4'
+  gem 'annotate', '~> 2.4.1.beta'
 end
 
 group :test do
