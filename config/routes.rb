@@ -4,7 +4,7 @@ App2012::Application.routes.draw do
 #  get "pages/about"
 #  get "pages/help"
 
-  get "users/new"
+
 
   match '/contact', :to => 'pages#contact'
   match '/about',   :to => 'pages#about'
@@ -12,6 +12,9 @@ App2012::Application.routes.draw do
   match '/signup',  :to => 'users#new'
 
   resources :users
+
+
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -4,7 +4,7 @@
 
 body {
  /* background: #cff; */
-  background: #000; 
+  background: #888; 
 }
 
 header {
@@ -13,14 +13,14 @@ header {
 
 header img {
   padding: 1em;
-  background: #111;
+  background: #565;
 }
 
 section {
   margin-top: 1em;
   font-size: 120%;
   padding: 20px;
-  background: #111;
+  background: #565;
 }
 
 section h1 {
