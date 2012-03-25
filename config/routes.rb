@@ -1,8 +1,13 @@
 App2012::Application.routes.draw do
+  get "sessions/new"
+
 #  get "pages/home"
 #  get "pages/contact"
 #  get "pages/about"
 #  get "pages/help"
+
+  resources :users
+  resources :sessions, :only => [:new, :create, :destroy]
 
 
 
@@ -10,8 +15,8 @@ App2012::Application.routes.draw do
   match '/about',   :to => 'pages#about'
   match '/help',    :to => 'pages#help'
   match '/signup',  :to => 'users#new'
-
-  resources :users
+  match '/signin',	:to => 'sessions#new'
+  match '/signout',	:to => 'sessions#destroy'
 
 
 
