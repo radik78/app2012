@@ -1,3 +1,5 @@
+# coding: utf-8
+
 require 'spec_helper'
 
 describe PagesController do
@@ -19,7 +21,7 @@ describe PagesController do
     it "should have the rigth title" do
        get 'home'
          response.should have_selector("title", 
-                    :content => @base_title+" | Home")
+                    :content => @base_title+" | Главная")
     end
 
   end
@@ -37,7 +39,7 @@ describe PagesController do
     it "should have the rigth title" do
        get 'contact'
          response.should have_selector("title", 
-                    :content => @base_title+" | Contact")
+                    :content => @base_title+" | Наши контакты")
             #         :content => "Contact") 
     end
 
@@ -54,7 +56,7 @@ describe PagesController do
     it "should have the rigth title" do
        get 'about'
          response.should have_selector("title", 
-                    :content => @base_title+" | About")
+                    :content => @base_title+" | О проекте")
     end
 
   end
@@ -70,7 +72,7 @@ describe PagesController do
     it "should have the rigth title" do
        get 'help'
          response.should have_selector("title", 
-                    :content => "Ruby on Rails Tutorial Sample App | Help")
+                    :content => "Ruby on Rails Tutorial Sample App | Помощь")
     end
 
   end

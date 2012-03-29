@@ -1,3 +1,5 @@
+# coding: utf-8
+
 require 'spec_helper'
 
 describe "Users" do
@@ -36,7 +38,7 @@ describe "Users" do
 					fill_in "Confirmation", :with => "123456"
 					click_button
 					response.should have_selector("div.flash.success",
-													:content => "Welcome")				
+													:content => "Добро")				
 					response.should render_template('users/show')
 				end.should change(User, :count).by(1)
 			end
@@ -55,7 +57,7 @@ describe "Users" do
 				fill_in :email, :with => ""
 				fill_in :password, :with => ""
 				click_button
-				response.should have_selector("div.flash.error", :content => "Invalid")
+				response.should have_selector("div.flash.error", :content => "Некорректная комбинация")
 			end
 		end
 
@@ -67,7 +69,7 @@ describe "Users" do
 				fill_in :password, :with => user.password
 				click_button
 				controller.should be_signed_in
-				click_link "Sign out"
+				click_link "Выход"
 				controller.should_not be_signed_in
 			end
 

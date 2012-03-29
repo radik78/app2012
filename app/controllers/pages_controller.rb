@@ -1,18 +1,20 @@
+# coding: utf-8
+
 class PagesController < ApplicationController
   def home
-    @title = "Home" 
+    @title = "Главная" 
   end
  
   def contact
-    @title = "Contact"
-  end
+    @title = "Наши контакты"
+  end	
 
   def about
-    @title = "About"
+    @title = "О проекте"
   end
 
   def help
-    @title = "Help"
+    @title = "Помощь"
   end
 
 end

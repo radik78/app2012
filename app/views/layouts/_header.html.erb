@@ -2,13 +2,13 @@
     <%= link_to logo, root_path %>
   <nav class="round">
     <ul>
-      	<li><%= link_to "Home", root_path %></li>
-      	<li><%= link_to "Help", help_path %></li>
+      	<li><%= link_to "Главная", root_path %></li>
+      	<li><%= link_to "Помощь", help_path %></li>
 		
 		<% if !signed_in? %>	
-		<li>	<%= link_to "Sign in", signin_path %>	</li>
+		<li>	<%= link_to "Вход", signin_path %>	</li>
 		<% else %>
-    	<li> 	<%= link_to "Sign out", signout_path, :method=> :delete %>	 </li>
+    	<li> 	<%= link_to "Выход", signout_path, :method=> :delete %>	 </li>
 		<% end %>
 
 

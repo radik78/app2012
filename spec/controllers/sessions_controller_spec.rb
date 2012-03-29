@@ -1,4 +1,8 @@
+# coding: utf-8
+
 require 'spec_helper'
+
+
 
 describe SessionsController do
     render_views
@@ -12,7 +16,7 @@ describe SessionsController do
 
 		it "should get correct title" do
 			get :new
-			response.should have_selector("title", :content => "Sign in")
+			response.should have_selector("title", :content => "Вход")
 
 		end
 
@@ -34,12 +38,15 @@ describe SessionsController do
 
 			it "should have the right title" do
 				post :create, :session => @attr
-				response.should have_selector("title", :content => "Sign in")
+				response.should have_selector("title", :content => "Вход")
 			end
 
 			it "should have a flash.now message" do
 				post :create, :session => @attr
-				flash.now[:error].should =~ /invalid/i
+				flash.now[:error].should =~ /Некорректная/i
+				# flash.now[:error].should be_has_content("Некорректаная")
+				# =~ /welcome to the sample app/i
+
 			end
 
 		end

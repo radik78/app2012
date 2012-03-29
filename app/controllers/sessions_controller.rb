@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class SessionsController < ApplicationController
   
 
@@ -7,7 +9,7 @@ class SessionsController < ApplicationController
 
 
   def new
-	@title = 'Sign in'
+	@title = 'Вход'
   end
 
 
@@ -23,13 +25,13 @@ class SessionsController < ApplicationController
 	if user.nil?
 
 		flash[:test] = 0
-		flash.now[:error] = "Invalid email/password combination."
-		@title = 'Sign in'
+		flash.now[:error] = "Некорректная комбинация email/password"
+		@title = 'Вход'
       	render 'new'
 	else
 		flash[:test] = 1
 		# Sign the user in and redirect to the user's show page.
-		flash[:success] = "Correct Sign In!"
+		flash[:success] = "Успешный вход на сайт"
 		sign_in user
       	redirect_to user
 	end
