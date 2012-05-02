@@ -64,10 +64,6 @@ describe SessionsController do
 		end
 
 
-		it "do not test" do
-			post :create, :session => @attr
-			flash[:test].should eq 1
-		end
 
 
 		it "should sign the user in" do
@@ -85,7 +81,7 @@ describe SessionsController do
 	end
 
 	describe "DELETE 'destroy'" do
-		
+
 		it "should sign the user out" do
 			test_sign_in(Factory(:user))
 			delete :destroy
@@ -96,19 +92,6 @@ describe SessionsController do
 	end
 
 
-	
+
 
 end
-
-
-
-
-
-
-
-
-
-
-
-
-

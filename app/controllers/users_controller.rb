@@ -2,6 +2,9 @@
 
 class UsersController < ApplicationController
 
+	before_filter :authenticate, :only => [:edit, :update]
+	before_filter :correct_user_id, :only => [:edit, :update]
+
 
 	#-------------------------------------------------------
     def show
@@ -40,13 +43,28 @@ class UsersController < ApplicationController
 
         if @user.update_attributes params[:user]
 			flash[:success]	= 'Данные успешно обновлены'
-			redirect_to user_path(@user)	
+			redirect_to user_path(@user)
 		else
 			@title = 'Редактирование'
 			render 'edit'
 		end
-		
+
 	end
+	#-------------------------------------------------------
+	#-------------------------------------------------------
+
+	private
+
+		def authenticate
+			deny_access unless signed_in?
+		end
+
+
+		def correct_user_id
+			querry_user = User.find(params[:id])
+			redirect_to root_path unless current_user? querry_user
+		end
+
 
 
 end

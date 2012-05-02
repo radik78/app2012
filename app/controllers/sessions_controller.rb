@@ -1,7 +1,7 @@
 # coding: utf-8
 
 class SessionsController < ApplicationController
-  
+
 
 
 
@@ -23,17 +23,19 @@ class SessionsController < ApplicationController
 	user = User.identificate(params[:session][:email],
 		                     params[:session][:password])
 	if user.nil?
-
-		flash[:test] = 0
 		flash.now[:error] = "Некорректная комбинация email/password"
 		@title = 'Вход'
       	render 'new'
 	else
-		flash[:test] = 1
 		# Sign the user in and redirect to the user's show page.
 		flash[:success] = "Успешный вход на сайт"
 		sign_in user
-      	redirect_to user
+
+      	redirect_to (session[:desire_path] || user)
+
+
+#		redirect_to (session[:desire_path])
+		session[:desire_path] = nil
 	end
 
  end

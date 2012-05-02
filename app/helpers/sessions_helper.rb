@@ -1,7 +1,8 @@
+#coding: utf-8
 module SessionsHelper
-	
 
-	attr_accessor :current_user	
+
+	attr_accessor :current_user
 
 
 	def signed_in?
@@ -24,6 +25,14 @@ module SessionsHelper
 	end
 
 
+	def deny_access
+		session[:desire_path] = request.fullpath
+		redirect_to signin_path, :notice => "Пожалуйста, совершите вход для доступа к запрашиваемой странице"
+	end
+
+	def current_user? (user)
+		user==current_user
+	end
 
 	def current_user
 	    @current_user ||= user_from_remember_token
