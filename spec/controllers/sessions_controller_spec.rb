@@ -23,6 +23,8 @@ describe SessionsController do
 	end
 
 
+
+
 	describe "POST 'create'" do
 
     	describe "invalid signin" do
@@ -90,8 +92,5 @@ describe SessionsController do
 		end
 
 	end
-
-
-
 
 end
