@@ -1,7 +1,7 @@
 require 'spork'
 
 Spork.prefork do
-  # Loading more in this block will cause your tests to run faster. However, 
+  # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
   ENV["RAILS_ENV"] ||= 'test'
@@ -32,9 +32,9 @@ Spork.prefork do
 
 
 
-	
-	
-	
+
+
+
   end
 end
 
@@ -42,7 +42,6 @@ Spork.each_run do
 end
 
 #------------------------------------------------------------------------------------------
-
 
 
 
@@ -57,19 +56,3 @@ def integrations_sign_in(user)
 		fill_in :password, :with => user.password
 	click_button
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

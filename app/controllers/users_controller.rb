@@ -1,8 +1,10 @@
 # coding: utf-8
 
+
+
 class UsersController < ApplicationController
 
-	before_filter :authenticate, :only => [:edit, :update]
+	before_filter :authenticate, :only => [:edit, :update, :index]
 	before_filter :correct_user_id, :only => [:edit, :update]
 
 
@@ -49,6 +51,12 @@ class UsersController < ApplicationController
 			render 'edit'
 		end
 
+	end
+
+
+	def index
+		@title = 'Список пользователей'
+		@users = User.paginate(:page => params[:page])
 	end
 	#-------------------------------------------------------
 	#-------------------------------------------------------

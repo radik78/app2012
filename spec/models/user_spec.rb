@@ -59,24 +59,24 @@ describe User do
 			User.new(@attr.merge(:password => "", :password_confirmation => "")).
 			should_not be_valid
 		end
-	
+
 		it "should require a matching password confirmation" do
 			User.new(@attr.merge(:password_confirmation => "invalid")).
 			should_not be_valid
 		end
-	
+
 		it "should reject short passwords" do
 			short = "a" * 5
 			hash = @attr.merge(:password => short, :password_confirmation => short)
 			User.new(hash).should_not be_valid
 		end
-	
+
 		it "should reject long passwords" do
 			long = "a" * 41
 			hash = @attr.merge(:password => long, :password_confirmation => long)
 			User.new(hash).should_not be_valid
 		end
-		
+
 	end
 
 
@@ -110,7 +110,7 @@ describe User do
 			it "should return object user on correct email and correct password" do
 				(User.identificate(@attr[:email], @attr[:password])==@user).should be_true
 			end
-			
+
 			it "should return nil on incorrect email" do
 				User.identificate("nonexist@com", @attr[:password]).should be_nil
 			end
@@ -123,9 +123,32 @@ describe User do
 		end
 
 	end
+	#-----------------------------------------------------------------------------
 
+
+	describe "admin attribute" do
+
+		# создадим пользователя в базе данных и сохраним в глобальной переменной
+		before(:each) do
+			@user = User.create!(@attr)
+		end
+
+		# экземпляр класса должен иметь свойство админ
+		it "should respond to admin" do
+			@user.should respond_to(:admin)
+		end
+
+		# свойство админ экзепляра класса должно по умолчанию возвращать ложь
+		it "should not be an admin by default" do
+			@user.should_not be_admin
+		end
+
+		# свойство админ должно свободно конветироваться
+		it "should be convertible to an admin" do
+			@user.toggle!(:admin)
+			@user.should be_admin
+		end
+	end
 
 
 end
- 
-

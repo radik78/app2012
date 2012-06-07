@@ -1,6 +1,7 @@
 # coding: utf-8
 
 require 'spec_helper'
+require 'will_paginate'
 
 describe UsersController do
     render_views
@@ -243,6 +244,70 @@ describe UsersController do
 
 
 	end
+
+	#=======================================================================
+	describe "GET 'index'" do
+		describe "for non-signed-in users" do
+			it "should deny access" do
+				get :index
+				response.should redirect_to(signin_path)
+			end
+		end
+
+		describe "for signed-in users" do
+			before(:each) do
+				@user 		= test_sign_in(Factory(:user))
+				second_user = Factory(:user,
+						  :name=>'secouseroid',
+						  :email=>'arli@do.com',
+						  )
+				third_user = Factory(:user,
+							:name=>'sadfasdf',
+							:email=>'domgo@do.com',
+							)
+				@users = [@user, second_user, third_user]
+
+				30.times do
+					@users << Factory(:user, :email => Factory.next(:email))
+				end
+
+			end
+
+			it "should have a rigth title" do
+				get :index
+				response.should have_selector('title',
+						:content=>"Список пользователей")
+
+			end
+
+			it "should be successful" do
+				get :index
+				response.should be_success
+			end
+
+			it "should get name of users" do
+				get :index
+				@users[0..2].each  do |usr|
+					response.should have_selector('li', :content=>usr.name)
+				end
+			end
+
+			it "should paginate users" do
+        		get :index
+        		response.should have_selector("div.pagination")
+        		response.should have_selector("span.disabled", :content => "Previous")
+        		response.should have_selector("a", :content => "2")
+        		response.should have_selector("a", :content => "Next")
+      		end
+
+		end
+
+	end
+
+
+
+
+
 
 
 end

@@ -4,7 +4,7 @@
 
 body {
  /* background: #cff; */
-  background: #888; 
+  background: #888;
 }
 
 header {
@@ -196,3 +196,11 @@ div.field, div.actions {
   list-style: square;
 }
 
+
+ul.users {
+  margin-top: 1em;
+}
+
+.users li {
+  list-style: none;
+}
