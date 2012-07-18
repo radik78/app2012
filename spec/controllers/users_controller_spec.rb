@@ -305,7 +305,56 @@ describe UsersController do
 	end
 
 
+	#=======================================================================
+	describe "DELETE 'destroy' " do
 
+		# создадим в базе запись, которую и будем удалять
+		before(:each) do
+			@user = Factory(:user)
+		end
+
+		# без авторизации пытаются удалить запись @user
+		describe "as a non-signed-in user" do
+			it "should deny access" do
+				delete :destroy, :id => @user
+				response.should redirect_to(signin_path)
+			end
+		end
+
+		# авторизированный пользователь, но не админ пытается удалить запись @user
+		describe "as a non-admin user" do
+			it "should protect page" do
+				non_admin_user = Factory(:user, :email => "non_admin@mail.ru")
+				test_sign_in(non_admin_user)
+				delete :destroy, :id => @user
+				response.should redirect_to(root_path)
+			end
+		end
+
+		# администратор удаляет запись @user
+		describe "as an admin user" do
+			# создадим админа и авторизируем его
+			before(:each) do
+				admin = Factory(:user, :email => "admin@mail.ru", :admin => true)
+				test_sign_in(admin)
+			end
+
+			# запись должна удалиться
+			it "should destroy the user" do
+				lambda do
+				 	delete :destroy, :id => @user
+				end.should change(User, :count).by(-1)
+			end
+
+			# должны перейти на страницу удаленного пользователя
+			it "should redirect to user page" do
+				delete :destroy, :id => @user
+				response.should redirect_to(users_path)
+			end
+
+		end
+
+	end
 
 
 

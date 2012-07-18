@@ -4,15 +4,16 @@
 
 class UsersController < ApplicationController
 
-	before_filter :authenticate, :only => [:edit, :update, :index]
-	before_filter :correct_user_id, :only => [:edit, :update]
+	before_filter :authenticate,	:only => [:edit, :update, :index, :destroy]
+	before_filter :correct_user_id,	:only => [:edit, :update]
+	before_filter :admin_user,		:only => :destroy
 
 
 	#-------------------------------------------------------
     def show
 		@user = User.find(params[:id])
         @title = @user.name
-    end
+	end
 
 	#-------------------------------------------------------
     def new
@@ -38,8 +39,16 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
         @title = "Редактирование"
 	end
-	#-------------------------------------------------------
 
+	#-------------------------------------------------------
+	def destroy
+		deleting_user = User.find(params[:id])
+		deleting_user.destroy
+		flash[:success] = "User with name #{deleting_user.name} is destroyed."
+		redirect_to users_path
+	end
+
+	#-------------------------------------------------------
 	def update
 		@user = User.find(params[:id])
 
@@ -53,11 +62,13 @@ class UsersController < ApplicationController
 
 	end
 
-
+	#-------------------------------------------------------
 	def index
 		@title = 'Список пользователей'
 		@users = User.paginate(:page => params[:page])
 	end
+
+
 	#-------------------------------------------------------
 	#-------------------------------------------------------
 
@@ -71,6 +82,11 @@ class UsersController < ApplicationController
 		def correct_user_id
 			querry_user = User.find(params[:id])
 			redirect_to root_path unless current_user? querry_user
+		end
+
+
+		def admin_user
+			redirect_to(root_path) unless current_user.admin?
 		end
 
 
