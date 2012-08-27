@@ -4,9 +4,11 @@
 
 class UsersController < ApplicationController
 
-	before_filter :authenticate,	:only => [:edit, :update, :index, :destroy]
-	before_filter :correct_user_id,	:only => [:edit, :update]
-	before_filter :admin_user,		:only => :destroy
+	before_filter :authenticate,	 :only => [:edit, :update, :index, :destroy]
+	before_filter :correct_user_id,	 :only => [:edit, :update]
+	before_filter :admin_user,		 :only => :destroy
+	before_filter :non_authenticate, :only => [:new, :create]
+	before_filter :delete_himself,   :only => [:destroy]
 
 
 	#-------------------------------------------------------
@@ -74,9 +76,18 @@ class UsersController < ApplicationController
 
 	private
 
+hh
+
+		# ============= фильтры ======================
+
 		def authenticate
 			deny_access unless signed_in?
 		end
+
+		def non_authenticate
+			deny_access if signed_in?
+		end
+
 
 
 		def correct_user_id
@@ -89,6 +100,9 @@ class UsersController < ApplicationController
 			redirect_to(root_path) unless current_user.admin?
 		end
 
-
+		def delete_himself
+			querry_user = User.find(params[:id])
+			redirect_to root_path if current_user? querry_user
+		end
 
 end

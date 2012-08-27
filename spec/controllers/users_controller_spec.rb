@@ -98,7 +98,7 @@ describe UsersController do
 					}
 		end
 
-		#--- проверим что стало на одного пользователя больше при правильных параметрах ---
+		#--- проверим, что стало на одного пользователя больше при правильных параметрах ---
 		it "should create a user" do
 		    lambda do
 		      post :create, :user => @attr
@@ -355,6 +355,50 @@ describe UsersController do
 		end
 
 	end
+
+
+	#=======================================================================
+	# удаляющие ссылки появляются для администраторов, но не для остальных.
+	describe "Link 'delete'" do
+
+		# создадим пользователей, перед тем как проверять ссылки удаления на них
+		before(:each) do
+			3.times do
+					Factory(:user, :email => Factory.next(:email))
+			end
+		end
+
+
+		# для администратора должны присутствовать ссылки 'delete'
+		it "should print for admin" do
+			admin = Factory(:user, :email => "admin@mail.ru",  :admin => true)
+			test_sign_in(admin)
+			get :index
+			response.should have_selector("a", :content=>'delete')
+
+		end
+
+		# для НЕ администратора должны отсутствовать ссылки 'delete'
+		it "should aption for non admin" do
+			get :index
+			response.should_not have_selector("a", :content=>'delete')
+
+		end
+	end
+
+
+	#=======================================================================
+	# проверим, что администратор не может удалить сам себя
+	describe 'check, that dosnt admin can delete himself?' do
+		it "admin dont can delete himself" do
+			@admin_user = Factory(:user, :email=>"admin@mail.ru", :admin=>true)
+			test_sign_in(@admin_user)
+			lambda do
+			 	delete :destroy, :id=>@admin_user
+			end.should change(User, :count).by(0)
+		end
+	end
+
 
 
 
