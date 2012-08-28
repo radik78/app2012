@@ -8,20 +8,23 @@
 #  created_at         :datetime
 #  updated_at         :datetime
 #  encrypted_password :string(255)
-# 
+#
 
 class User < ActiveRecord::Base
-	
-	attr_accessor :password	
+
+	attr_accessor :password
 	attr_accessible :name, :email, :password, :password_confirmation, :encrypted_password
+
+	has_many :microposts
+
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
-	validates :name, 
-		:presence    => true, 
+	validates :name,
+		:presence    => true,
 		:length      => { :maximum => 50 }
 
-  	validates :email, 
-		:presence    => true, 
+  	validates :email,
+		:presence    => true,
 		:format      => { :with => email_regex },
 		:uniqueness  => { :case_sensitive => false}
 
@@ -33,7 +36,7 @@ class User < ActiveRecord::Base
 
 	before_save :make_encrypt_password
 
-		def identical_password?(submitted_password) 
+		def identical_password?(submitted_password)
 			encrypted_password == encrypt_algoritm(submitted_password)
 		end
 
@@ -55,7 +58,7 @@ class User < ActiveRecord::Base
 
 
 
-		
+
 
   		def self.authenticate_with_salt(id, cookie_salt)
     		user = find_by_id(id)
@@ -67,7 +70,7 @@ class User < ActiveRecord::Base
 
 
 
-		def encrypt_algoritm(string)	
+		def encrypt_algoritm(string)
 			Digest::SHA2.hexdigest("#{string}--#{salt}")
 		end
 
@@ -77,5 +80,5 @@ class User < ActiveRecord::Base
 			self.encrypted_password = encrypt_algoritm(password)
 		end
 
-	
+
 end

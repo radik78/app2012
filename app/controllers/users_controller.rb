@@ -76,7 +76,7 @@ class UsersController < ApplicationController
 
 	private
 
-hh
+
 
 		# ============= фильтры ======================
 
