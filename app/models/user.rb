@@ -54,6 +54,7 @@ class User < ActiveRecord::Base
 			return user if user.identical_password?(password)
 
 		end
+		
 
 
 
